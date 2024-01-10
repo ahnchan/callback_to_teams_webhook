@@ -1,3 +1,5 @@
-node_modules
+# dependencies
+/node_modules
 
+# test script
 start_test.sh
