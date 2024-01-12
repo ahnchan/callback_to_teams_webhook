@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: callback-to-webhook
+   namespace: default
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+         app: callback-to-webhook
+   template:
+      metadata:
+         labels:
+            app: callback-to-webhook
+      spec:
+         containers:
+            - name: callback-to-webhook
+              image: ahnchan/callback_to_webhook:v0.6
+              env:
+              - name: WEBHOOK_URL
+                valueFrom:
+                  configMapKeyRef:
+                    name: callback-to-webhook-config
+                    key: webhookUrl
+---
+apiVersion: v1
+kind: Service
+metadata:
+   name: callback-to-webhook
+   namespace: default
+spec:
+   type: NodePort
+   selector:
+      app: callback-to-webhook
+   ports:
+      - port: 8080
+        targetPort: 8080
+        nodePort: 31000

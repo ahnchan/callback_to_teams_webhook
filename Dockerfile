@@ -1,7 +1,11 @@
 FROM node:16
+
+RUN mkdir -p /app
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+
 EXPOSE 8080
-
-COPY * .
-CMD npm install
-
-RUN npm start
+CMD ["node", "index.js"]

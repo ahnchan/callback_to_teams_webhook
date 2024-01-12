@@ -9,7 +9,19 @@ const webhookUrl = process.env.WEBHOOK_URL
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Rooot
 app.all('/', (req, res) => {
+    console.log('received /');
+    res.send('success');
+});
+
+// 404
+app.get('*', function(req, res){
+    res.send('error '+ req.url, 404);
+});
+
+// Callback
+app.all('/callback', (req, res) => {
 
     let info = {
         method: req.method,
